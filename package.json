@@ -1,0 +1,18 @@
+{
+  "name": "wizdom-stremio-express",
+  "version": "0.1.0",
+  "description": "Stremio addon for Hebrew subtitles from wizdom.xyz using express this time",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "stremio",
+    "wizdom"
+  ],
+  "author": "Maor Development",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
