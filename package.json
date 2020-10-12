@@ -13,6 +13,9 @@
   "author": "Maor Development",
   "license": "GPL-3.0",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "superagent": "^6.1.0",
+    "unzip-stream": "^0.3.1"
   }
 }
