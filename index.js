@@ -7,7 +7,7 @@ const addon = express()
 
 const manifest = {
 	"id": "xyz.stremio.wizdom",
-	"version": "0.0.1",
+	"version": process.env.npm_package_version,
 	"catalogs": [],
 	"resources": [
 		"subtitles"
