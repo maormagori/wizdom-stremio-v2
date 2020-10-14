@@ -1,8 +1,6 @@
 const express = require("express"),
- superagent = require("superagent"),
- unzip = require("unzip-stream"),
- glob = require("glob")
- fs = require('fs');
+ config = require('./config'),
+ {getSubs, fetchSrt, srtPath, deleteSrt} = require('./wizdom')
 
 const addon = express()
 
@@ -23,62 +21,60 @@ const manifest = {
 	"logo": "https://i.ibb.co/KLYK0TH/wizdon256.png"
 }
 
-var respond = function (res, data) {
+const respond = function (res, data) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
     res.setHeader('Content-Type', 'application/json');
     res.send(data);
   };
 
+const sendSrt = (res, filepath) => {
+	return new Promise((resolve, reject) => {
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		res.setHeader('Access-Control-Allow-Headers', '*');
+		res.status(200)
+		res.sendFile(filepath, (err) => {
+			if(err){
+				console.log("Sending file error!")
+				reject(err)
+			}
+			else
+				resolve();
+		})
+	})
+}
+
 addon.get('/manifest.json', function (req, res) {
     respond(res, manifest);
 });
 
-addon.listen(7000, function() {
-    console.log('Add-on Repository URL: http://127.0.0.1:7000/manifest.json')
-  });
-
-addon.get('/subtitles/:type/:imdbId/:query.json', (req, res) => {
-	const subtitles = [];
-	subtitles.push({url: "", lang:"heb"})
-	subtitles[0].url = "http://127.0.0.1:7000/srt/231375.srt"
+addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
+	const subtitles = await getSubs(req.params.imdbId);
     respond(res, { "subtitles" : subtitles});
 })
 
-addon.get('/srt/:id.srt', (req, res) => {
-	superagent("https://zip.wizdom.xyz/231375.zip").pipe(unzip.Extract({ path: `srt/${req.params.id}` })
-	.on('close', () => {
-		res.setHeader('Access-Control-Allow-Origin', '*');
-		res.setHeader('Access-Control-Allow-Headers', '*');
-		
-		let filepath=`srt/${req.params.id}/*.srt`;
-		glob(filepath, (er, files) =>{
-			if(er){
-				console.log(er);
-				console.log("glob error!")
-			}
-			filepath = files[0];
-			console.log(files);
-			console.log(`${__dirname}\\${filepath}`)
-			res.status(200)
-			res.sendFile(`${__dirname}\\${filepath}`, (err) => {
-				if(err){
-					console.log("express sendFile error!")
-					console.log(err);
-				}
-				else
-					console.log('sent: ' +filepath+ 'succesfully!' );
-					fs.rmdir(`srt/${req.params.id}`,{recursive: true}, (err) => {
-						if(!err)
-							console.log(`${filepath} has been deleted.`)
-					})
-			})
-		})
-		
-		
-	}))
+
+//TODO: store id requests. Block unidentified ids.
+addon.get('/srt/:id.srt', async (req, res) => {
+	try {
+		id = req.params.id;
+		await fetchSrt(id);
+		filepath = await srtPath(id);
+		await sendSrt(res, filepath.full);
+		await deleteSrt(id);
+
+		console.log(`${id} has been sent and deleted succesfully!`)
+	} catch(error){
+		throw error
+	}
 	
 })
+
+
+addon.listen(config.port, function() {
+	console.log(config)
+    console.log(`Add-on Repository URL: ${config.local}/manifest.json`)
+  });
 
 
 
