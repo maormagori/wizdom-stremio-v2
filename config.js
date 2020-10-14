@@ -13,7 +13,7 @@ var config = {
 switch (env) {
     case 'heroku':
 		config.port = process.env.PORT
-        config.local = "http://addic7ed-stremio-addon.herokuapp.com"
+        config.local = "http://this-addons-url.herokuapp.com"
         break;
     case 'local':
 		config.port = 7000
