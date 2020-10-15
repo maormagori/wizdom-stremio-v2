@@ -1,8 +1,7 @@
 //TODO: Creates a circular dependency. Fix this.
 //const {getWizDomain} = require('./wizdom.js');
 
-//var env = process.argv[2] || 'heroku';
-var env = 'local'
+var env = process.argv[2] || 'heroku';
 var config = {
 
     //TODO: Add wizdom server not responding.
@@ -13,7 +12,7 @@ var config = {
 switch (env) {
     case 'heroku':
 		config.port = process.env.PORT
-        config.local = "http://this-addons-url.herokuapp.com"
+        config.local = "https://this-addons-url.com"
         break;
     case 'local':
 		config.port = 7000

@@ -13,6 +13,7 @@
   "author": "Maor Development",
   "license": "GPL-3.0",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "subtitles-grouping": "^1.5.4",

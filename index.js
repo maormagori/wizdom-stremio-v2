@@ -1,9 +1,11 @@
 const express = require("express"),
  config = require('./config'),
+ cors = require('cors'),
  {getSubs} = require('./wizdom'),
  { retrieveSrt } = require("subtitles-grouping/lib/retriever");
  
 const addon = express()
+addon.use(cors())
 
 
 const manifest = {
