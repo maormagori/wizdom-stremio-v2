@@ -11,6 +11,7 @@ addon.use(cors())
 
 const manifest = {
 	"id": "xyz.stremio.wizdom",
+	"contactEmail": "maor.development@gmail.com",
 	"version": process.env.npm_package_version,
 	"catalogs": [],
 	"resources": [
