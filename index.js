@@ -1,9 +1,8 @@
 const express = require("express"),
  config = require('./config'),
+ {getSubs} = require('./wizdom'),
  { retrieveSrt } = require("subtitles-grouping/lib/retriever");
- iconv = require('iconv-lite')
  
-
 const addon = express()
 
 
@@ -30,21 +29,6 @@ const respond = function (res, data) {
     res.send(data);
   };
 
-const sendSrt = (res, filepath) => {
-	return new Promise((resolve, reject) => {
-		res.setHeader('Access-Control-Allow-Origin', '*');
-		res.setHeader('Access-Control-Allow-Headers', '*');
-		res.status(200)
-		res.sendFile(filepath, (err) => {
-			if(err){
-				console.log("Sending file error!")
-				reject(err)
-			}
-			else
-				resolve();
-		})
-	})
-}
 
 addon.get('/manifest.json', function (req, res) {
     respond(res, manifest);
@@ -56,7 +40,7 @@ addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 })
 
 
-//TODO: store id requests. Block unidentified ids.
+//TODO: Create cache system.
 addon.get('/srt/:id.srt', async (req, res) => {
 
 	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
@@ -70,7 +54,6 @@ addon.get('/srt/:id.srt', async (req, res) => {
 			res.send(buffer);
 		}
 	})
-	
 })
 
 
