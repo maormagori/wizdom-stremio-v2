@@ -34,6 +34,12 @@ addon.get('/manifest.json', function (req, res) {
     respond(res, manifest);
 });
 
+addon.get('/', function (req, res) {
+    respond(res, manifest);
+});
+
+
+
 addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 	const subtitles = await getSubs(req.params.imdbId);
     respond(res, { "subtitles" : subtitles});
@@ -55,7 +61,6 @@ addon.get('/srt/:id.srt', async (req, res) => {
 		}
 	})
 })
-
 
 addon.listen(config.port, function() {
 	console.log(config)
