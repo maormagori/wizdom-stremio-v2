@@ -16,14 +16,14 @@ npm start
 ```
 
 Add the addon to stremio from browser:
-stremio://127.0.0.1:8095/manifest.json
+stremio://127.0.0.1:7000/manifest.json
 
 or from the addon search menu:
 ```
-http://127.0.0.1:8095/manifest.json
+http://127.0.0.1:7000/manifest.json
 ```
 ## TODO
-Features I would like to implement and stuff needed to do:
+Features I would like to implement and stuff needed to be done:
 - [ ] Proper Documentation
 - [ ] Cache system
 - [ ] Maybe a landing page.

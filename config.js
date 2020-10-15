@@ -1,7 +1,7 @@
 //TODO: Creates a circular dependency. Fix this.
 //const {getWizDomain} = require('./wizdom.js');
 
-var env = process.argv[2] || 'heroku';
+var env = process.argv[2] || 'local';
 var config = {
 
     //TODO: Add wizdom server not responding.

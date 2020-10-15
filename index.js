@@ -2,7 +2,8 @@ const express = require("express"),
  config = require('./config'),
  cors = require('cors'),
  {getSubs} = require('./wizdom'),
- { retrieveSrt } = require("subtitles-grouping/lib/retriever");
+ { retrieveSrt } = require("subtitles-grouping/lib/retriever"),
+ landing = require('./landingTemplate');
  
 const addon = express()
 addon.use(cors())
@@ -37,10 +38,13 @@ addon.get('/manifest.json', function (req, res) {
 });
 
 addon.get('/', function (req, res) {
-    respond(res, manifest);
+	res.set('Content-Type', 'text/html');
+	res.send(landing(manifest));
 });
 
-
+addon.get('/readme.md', (req,res) => {
+	res.sendFile(`${__dirname}/README.md`)
+})
 
 addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 	const subtitles = await getSubs(req.params.imdbId);
