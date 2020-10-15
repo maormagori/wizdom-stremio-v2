@@ -1,6 +1,8 @@
 const express = require("express"),
  config = require('./config'),
- {getSubs, fetchSrt, srtPath, deleteSrt} = require('./wizdom')
+ { retrieveSrt } = require("subtitles-grouping/lib/retriever");
+ iconv = require('iconv-lite')
+ 
 
 const addon = express()
 
@@ -56,17 +58,18 @@ addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 
 //TODO: store id requests. Block unidentified ids.
 addon.get('/srt/:id.srt', async (req, res) => {
-	try {
-		id = req.params.id;
-		await fetchSrt(id);
-		filepath = await srtPath(id);
-		await sendSrt(res, filepath.full);
-		await deleteSrt(id);
 
-		console.log(`${id} has been sent and deleted succesfully!`)
-	} catch(error){
-		throw error
-	}
+	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
+		if(err){
+			console.log(`error retrieving ${req.params.id}`)
+			console.log(err);
+		}
+		else {
+			res.status(200);
+			res.set({'content-type': 'text/srt; charset=utf-8'})
+			res.send(buffer);
+		}
+	})
 	
 })
 
