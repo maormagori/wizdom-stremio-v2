@@ -48,13 +48,18 @@ addon.get('/readme.md', (req,res) => {
 })
 
 addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
+	try {
 	const subtitles = await getSubs(req.params.imdbId);
-    respond(res, { "subtitles" : subtitles});
+	respond(res, { "subtitles" : subtitles});
+	} catch (err) {
+		console.log("get subs error:");
+		console.log(err);
+	}
 })
 
 
 //TODO: Create cache system.
-addon.get('/srt/:id.srt', async (req, res) => {
+addon.get('/srt/:id.srt', (req, res) => {
 
 	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
 		if(err){
