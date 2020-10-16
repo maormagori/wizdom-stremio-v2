@@ -164,6 +164,8 @@ button:active {
    padding-top: 70px;
    position: relative;
    word-wrap: break-word;
+   box-shadow: 0 4px 8px 12px rgba(0,0,0,0.2);
+   border-radius: 5px;
 }
 
 .logo {
@@ -194,9 +196,7 @@ button:active {
 }
 
 .contact {
-   position: absolute;
-   left: 0;
-   bottom: 4vh;
+   margin-top: 50px;
    width: 100%;
    text-align: center;
 }
