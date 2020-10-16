@@ -10,7 +10,7 @@ var config = {
 }
 
 switch (env) {
-    case 'heroku':
+    case 'beamup':
 		config.port = process.env.PORT
         config.local = "https://this-addons-url.com"
         break;
