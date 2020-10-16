@@ -12,7 +12,7 @@ var config = {
 switch (env) {
     case 'beamup':
 		config.port = process.env.PORT
-        config.local = "https://this-addons-url.com"
+        config.local = "https://4b139a4b7f94-wizdom-stremio-v2.baby-beamup.club"
         break;
     case 'local':
 		config.port = 7000
