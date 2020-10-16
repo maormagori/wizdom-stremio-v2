@@ -3,7 +3,11 @@ An unofficial Stremio addon for Hebrew subtitles from wizdom.xyz. Developed by M
 
 ## Installation
 ### Online
-At the moment I haven't deployed this addon online.
+Currently you can get this addon in:
+
+https://4b139a4b7f94-wizdom-stremio-v2.baby-beamup.club/
+
+I have'nt published this addon because I'm waiting for an answer from Wizdom.xyz developers.
 
 ### Local
 Download and install Node.js on your computer, then install and launch the addon from Powershell:
