@@ -28,7 +28,7 @@ http://127.0.0.1:7000/manifest.json
 ```
 ## TODO
 Features I would like to implement and stuff needed to be done:
-- [ ] Proper Documentation
+- [x] Documentation
 - [ ] Cache system
 - [x] Maybe a landing page.
 - [ ] Auto switch to wizdom's backup domain
