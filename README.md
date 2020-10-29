@@ -7,7 +7,7 @@ Currently you can get this addon in:
 
 https://4b139a4b7f94-wizdom-stremio-v2.baby-beamup.club/
 
-I have'nt published this addon because I'm waiting for an answer from Wizdom.xyz developers.
+I've published this addon and you can now find it in the addon catalog!
 
 ### Local
 Download and install Node.js on your computer, then install and launch the addon from Powershell:

@@ -216,7 +216,7 @@ function landingTemplate(manifest) {
 	const logo = manifest.logo || 'https://dl.strem.io/addon-logo.png'
 	const contactHTML = manifest.contactEmail ?
 		`<div class="contact">
-         <p>Contact ${manifest.name} creator:</p>
+         <p>Contact ${manifest.name} addon creator:</p>
          <a href="mailto:${manifest.contactEmail}">${manifest.contactEmail}</a>
       </div>` : ''
 
@@ -241,7 +241,9 @@ function landingTemplate(manifest) {
       <div id="background-shade" style="background:rgba(0, 0, 0, 0.60);padding-top: 30px;">
          <div id="addon">
             <div class="logo">
-               <img src="${logo}">
+               <a href="https://wizdom.xyz/">
+                  <img src="${logo}">
+               </a>
             </div>
             <h1 class="name">${manifest.name}</h1>
             <h2 class="version">${manifest.version || '0.0.0'}</h2>
@@ -263,10 +265,10 @@ function landingTemplate(manifest) {
             
          </div>
          <div class="markdown">
-            <p class="github">
+            <a href="https://github.com/maormagori/wizdom-stremio-v2" class="github">
                <i class="fa fa-github"></i>
                <span> Github README.md </span>
-            </p>
+            </a>
             <zero-md src="/README.md"></zero-md>
          </div>
       </div>
