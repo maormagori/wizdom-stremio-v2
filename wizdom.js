@@ -34,13 +34,16 @@ const getSubs = async (imdbID) => {
 const mapSubsJson = (data) => {
     subtitles = [];
     data.map((sub => {
-        subtitles.push({url: `${config.local}/srt/${sub.id}.srt`, lang: "heb", id:`${sub.id}`})
+        subtitles.push({url: `http://127.0.0.1:11470/subtitles.vtt?from=https://zip.${config.wizdom_url}/${sub.id}.zip`, lang: "heb", id:`${sub.id}`})
+        
     }));
+
+    console.log(subtitles)
     
     //To force Stremio server to unzip the file will change the subtitle's url to:
     //http://127.0.0.1:11470/subtitles.vtt?from=https://zip.${config.wizdom_url}/${sub.id}.zip
     //This needs further testing to be push to prod.
-    
+
     return subtitles;
 }
 
