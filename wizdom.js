@@ -29,6 +29,7 @@ const getSubs = async (imdbID) => {
 
 /**
  * Builds an array of subtitle object: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/subtitles.md
+ * Since version 2.2.3 I've added id to each sub.
  * @param {} data An array of subs id's, name and version.
  */
 const mapSubsJson = (data) => {

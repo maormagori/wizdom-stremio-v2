@@ -2,7 +2,6 @@ const express = require("express"),
  config = require('./config'),
  cors = require('cors'),
  {getSubs} = require('./wizdom'),
- { retrieveSrt } = require("subtitles-grouping/lib/retriever"),
  landing = require('./landingTemplate');
  
 const addon = express()
@@ -67,24 +66,27 @@ addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 	}
 })
 
-
-//TODO: Create cache system.
-//Subtitles unzipping request.
-//unzips a subtitle zip file and respond with the buffer.
-addon.get('/srt/:id.srt', (req, res) => {
-
-	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
-		if(err){
-			console.log(`error retrieving ${req.params.id}`)
-			console.log(err);
-		}
-		else {
-			res.status(200);
-			res.set({'content-type': 'text/srt; charset=utf-8'})
-			res.send(buffer);
-		}
-	})
-})
+/**
+ * @deprecated No longer used. Version 2.3.3 uses the streaming server
+ * to unzip the file.
+ * 
+ * TODO: Create cache system.
+ * Subtitles unzipping request.
+ * unzips a subtitle zip file and respond with the buffer.
+ */
+// addon.get('/srt/:id.srt', (req, res) => {
+// 	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
+// 		if(err){
+// 			console.log(`error retrieving ${req.params.id}`)
+// 			console.log(err);
+// 		}
+// 		else {
+// 			res.status(200);
+// 			res.set({'content-type': 'text/srt; charset=utf-8'})
+// 			res.send(buffer);
+// 		}
+// 	})
+// })
 
 //Starting the addon
 addon.listen(config.port, function() {
