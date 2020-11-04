@@ -29,7 +29,7 @@ http://127.0.0.1:7000/manifest.json
 ## TODO
 Features I would like to implement and stuff needed to be done:
 - [x] Documentation
-- [ ] Cache system
+- [x] Cache system (No need since we're not buffering the srts anymore)
 - [x] Maybe a landing page.
 - [ ] Auto switch to wizdom's backup domain
 
