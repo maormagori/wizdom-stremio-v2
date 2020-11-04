@@ -7,7 +7,7 @@ const superagent = require("superagent"),
     config = require('./config')
     
 /**
- * request's all the subs avlible for a specific imdb id.
+ * request's all the subs available for a specific imdb id.
  * The given imdb id also contains the season and episode numbers, divide by colons.
  * @param {string} imdbID   Title's imdb ID and season and episode numbers.
  */
@@ -34,7 +34,7 @@ const getSubs = async (imdbID) => {
 const mapSubsJson = (data) => {
     subtitles = [];
     data.map((sub => {
-        subtitles.push({url: `${config.local}/srt/${sub.id}.srt`, lang: "heb"})
+        subtitles.push({url: `${config.local}/srt/${sub.id}.srt`, lang: "heb", id:`${sub.id}`})
     }));
     
     return subtitles;
