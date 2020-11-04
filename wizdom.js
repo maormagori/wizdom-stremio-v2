@@ -38,11 +38,8 @@ const mapSubsJson = (data) => {
         
     }));
 
-    console.log(subtitles)
+    //console.log(subtitles)
     
-    //To force Stremio server to unzip the file will change the subtitle's url to:
-    //http://127.0.0.1:11470/subtitles.vtt?from=https://zip.${config.wizdom_url}/${sub.id}.zip
-    //This needs further testing to be push to prod.
 
     return subtitles;
 }
