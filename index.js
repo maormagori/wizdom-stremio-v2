@@ -1,9 +1,10 @@
+const { query } = require("express");
 const express = require("express"),
- config = require('./config'),
- cors = require('cors'),
- {getSubs} = require('./wizdom'),
- landing = require('./landingTemplate');
- 
+	config = require('./config'),
+	cors = require('cors'),
+	{ getSubs } = require('./wizdom'),
+	landing = require('./landingTemplate');
+
 const addon = express()
 addon.use(cors())
 
@@ -12,7 +13,7 @@ addon.use(cors())
  */
 const manifest = {
 	"id": "xyz.stremio.wizdom",
-	"contactEmail": "maor.development@gmail.com",
+	"contactEmail": "maor@magori.online",
 	"version": process.env.npm_package_version,
 	"catalogs": [],
 	"resources": [
@@ -33,15 +34,15 @@ const manifest = {
  * @param {*} data 		The data to respond with.
  */
 const respond = function (res, data) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(data);
-  };
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Headers', '*');
+	res.setHeader('Content-Type', 'application/json');
+	res.send(data);
+};
 
 //manifest request.
 addon.get('/manifest.json', function (req, res) {
-    respond(res, manifest);
+	respond(res, manifest);
 });
 
 //Landing page request.
@@ -51,15 +52,17 @@ addon.get('/', function (req, res) {
 });
 
 //Addon's readme request
-addon.get('/readme.md', (req,res) => {
+addon.get('/readme.md', (req, res) => {
 	res.sendFile(`${__dirname}/README.md`)
 })
 
 //Subtitles request.
 addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 	try {
-	const subtitles = await getSubs(req.params.imdbId);
-	respond(res, { "subtitles" : subtitles});
+		var filename = req.params.query.split("=").pop();
+
+		const subtitles = await getSubs(req.params.imdbId, filename);
+		respond(res, { "subtitles": subtitles });
 	} catch (err) {
 		console.log("get subs error:");
 		console.log(err);
@@ -70,9 +73,6 @@ addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
  * @deprecated No longer used. Version 2.3.3 uses the streaming server
  * to unzip the file.
  * 
- * TODO: Create cache system.
- * Subtitles unzipping request.
- * unzips a subtitle zip file and respond with the buffer.
  */
 // addon.get('/srt/:id.srt', (req, res) => {
 // 	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
@@ -89,12 +89,11 @@ addon.get('/subtitles/:type/:imdbId/:query.json', async (req, res) => {
 // })
 
 //Starting the addon
-addon.listen(config.port, function() {
+addon.listen(config.port, function () {
 	console.log(config)
-    console.log(`Add-on Repository URL: ${config.local}/manifest.json`)
-  });
+	console.log(`Add-on Repository URL: ${config.local}/manifest.json`)
+});
 
 
 
-  
-  
+

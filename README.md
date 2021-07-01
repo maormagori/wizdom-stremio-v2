@@ -31,7 +31,7 @@ Features I would like to implement and stuff needed to be done:
 - [x] Documentation
 - [x] Cache system (No need since we're not buffering the srts anymore)
 - [x] Maybe a landing page.
-- [ ] Auto switch to wizdom's backup domain
+- [x] Added Levenshtein sorting.
 
 ## contributions
 
