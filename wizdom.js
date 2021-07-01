@@ -27,8 +27,6 @@ const getSubs = async (imdbID, filename) => {
 
         data.sort(compareSubs);
 
-        console.log(data)
-
         return mapSubsJson(data);
 
     } catch (err) {
