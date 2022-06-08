@@ -5,7 +5,7 @@
  * Contains all the info the addon needs about server addresses and ports.
  */
 
-var env = process.env.NODE_ENV ? "beamup" : "local";
+var env = "beamup";
 var config = {
     wizdom_host: "wizdom.xyz",
     wizdom_url: "https://wizdom.xyz/",
