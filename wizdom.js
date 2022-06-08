@@ -38,13 +38,11 @@ const getSubs = async (imdbID, filename) => {
         };
 
         subsArr.sort(compareSubs);
-
-        return mapSubsJson(subsArr);
     } catch (err) {
         console.log("getSubs has thrown an error:");
         console.log(err);
     } finally {
-        return subsArr;
+        return mapSubsJson(subsArr);
     }
 };
 
