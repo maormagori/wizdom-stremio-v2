@@ -4,7 +4,8 @@
   "description": "Stremio addon for Hebrew subtitles from wizdom.xyz using express this time",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
   },
   "keywords": [
     "stremio",
@@ -18,5 +19,8 @@
     "fastest-levenshtein": "^1.0.12",
     "glob": "^7.1.6",
     "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
