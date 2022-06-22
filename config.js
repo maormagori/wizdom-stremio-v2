@@ -5,7 +5,7 @@
  * Contains all the info the addon needs about server addresses and ports.
  */
 
-let env = process.env.NODE_ENV ?? "local";
+let env = process.env.DEPLOYMENT ?? "local";
 const config = {
   wizdom_host: "wizdom.xyz",
   wizdom_url: "https://wizdom.xyz/",
