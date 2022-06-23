@@ -53,9 +53,12 @@ const getSubs = async (imdbID, filename) => {
 const mapSubsJson = (subsArr) => {
   subtitles = [];
   subsArr.map((sub) => {
-    let subURL = new URL(sub.id, config.wizdom_sub_download_url);
+    let subURL = new URL(
+      `${sub.id}.srt`,
+      config.local + config.srt_unzipper_path
+    );
     subtitles.push({
-      url: `${config.stremio_server_subtitle_url}?from=${subURL.href}`,
+      url: subURL.href,
       lang: "heb",
       id: `[WIZDOM]${sub.id}`,
     });
@@ -64,4 +67,14 @@ const mapSubsJson = (subsArr) => {
   return subtitles;
 };
 
-module.exports = getSubs;
+/**
+ * returns a file stream of requested sub's id zip file.
+ * @param {number} subId
+ * @returns {superagent.SuperAgentRequest} A request to the requested id's zip file.
+ */
+const downloadSubZip = (subId) => {
+  let subZipURL = new URL(subId, config.wizdom_sub_download_url);
+  return superagent.get(subZipURL.href);
+};
+
+module.exports = { getSubs, downloadSubZip };

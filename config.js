@@ -13,6 +13,7 @@ const config = {
   wizdom_title_info: "https://wizdom.xyz/api/releases/",
   wizdom_sub_download_url: "https://wizdom.xyz/api/files/sub/",
   stremio_server_subtitle_url: "http://127.0.0.1:11470/subtitles.vtt",
+  srt_unzipper_path: "/srt/",
 };
 
 //Public server build.

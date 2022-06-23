@@ -1,8 +1,9 @@
 const express = require("express"),
   config = require("./config"),
   cors = require("cors"),
-  getSubs = require("./wizdom"),
-  landing = require("./landingTemplate");
+  { getSubs, downloadSubZip } = require("./wizdom"),
+  landing = require("./landingTemplate"),
+  unzipper = require("unzipper");
 
 const addon = express();
 addon.use(cors());
@@ -28,7 +29,7 @@ const manifest = {
  * @param {import("superagent").Response} res 	The request's response object
  * @param {*} data 		The data to respond with.
  */
-const respond = function (res, data) {
+const respondWithHeaders = function (res, data) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.setHeader("Content-Type", "application/json");
@@ -37,7 +38,7 @@ const respond = function (res, data) {
 
 //manifest request.
 addon.get("/manifest.json", function (req, res) {
-  respond(res, manifest);
+  respondWithHeaders(res, manifest);
 });
 
 //Landing page request.
@@ -57,31 +58,25 @@ addon.get("/subtitles/:type/:imdbId/:query.json", async (req, res) => {
     var filename = req.params.query.split("=").pop();
 
     const subtitles = await getSubs(req.params.imdbId, filename);
-    respond(res, { subtitles: subtitles });
+    respondWithHeaders(res, { subtitles: subtitles });
   } catch (err) {
-    console.log("get subs error:");
-    console.log(err);
+    console.error("get subs error: ", err);
   }
 });
 
 /**
- * @deprecated No longer used. Version 2.3.3 uses the streaming server
- * to unzip the file.
- *
+ * unzips Wizdom zip files and send the srt file in it.
  */
-// addon.get('/srt/:id.srt', (req, res) => {
-// 	retrieveSrt(`https://zip.${config.wizdom_url}/${req.params.id}.zip`, (err,buffer) => {
-// 		if(err){
-// 			console.log(`error retrieving ${req.params.id}`)
-// 			console.log(err);
-// 		}
-// 		else {
-// 			res.status(200);
-// 			res.set({'content-type': 'text/srt; charset=utf-8'})
-// 			res.send(buffer);
-// 		}
-// 	})
-// })
+addon.get("/srt/:id.srt", (req, res) => {
+  try {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+    downloadSubZip(req.params.id).pipe(unzipper.ParseOne()).pipe(res);
+  } catch (err) {
+    console.error("error occurred while sending unzipped srt file: ", err);
+  }
+});
 
 //Starting the addon
 addon.listen(config.port, function () {
