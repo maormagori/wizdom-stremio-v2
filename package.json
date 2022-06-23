@@ -17,7 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fastest-levenshtein": "^1.0.12",
-    "superagent": "^6.1.0",
+    "superagent": "^7.0.2",
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
