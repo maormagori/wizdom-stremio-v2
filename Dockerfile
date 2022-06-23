@@ -8,7 +8,7 @@ COPY package* /usr/src/wizdom/
 
 RUN npm ci --only=production
 
-COPY ["index.js", "config.js", "wizdom.js", "landingTemplate.js", "/usr/src/wizdom/"]
+COPY ["index.js", "config.js", "wizdom.js", "landingTemplate.js", "README.md", "/usr/src/wizdom/"]
 
 CMD ["npm", "start"]
 
