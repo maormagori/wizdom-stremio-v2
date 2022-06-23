@@ -3,10 +3,12 @@ const express = require("express"),
   cors = require("cors"),
   { getSubs, downloadSubZip } = require("./wizdom"),
   landing = require("./landingTemplate"),
-  unzipper = require("unzipper");
+  unzipper = require("unzipper"),
+  morgan = require("morgan");
 
 const addon = express();
 addon.use(cors());
+addon.use(morgan("short"));
 
 /**
  * The addon manifest: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
