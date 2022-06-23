@@ -4,7 +4,7 @@ ENV NODE_ENV=production DEPLOYMENT=beamup
 
 WORKDIR /usr/src/wizdom
 
-COPY package* /usr/src/wizdom
+COPY package* /usr/src/wizdom/
 
 RUN npm ci --only=production
 
