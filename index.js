@@ -48,7 +48,7 @@ addon.get("/", function (req, res) {
 });
 
 //Addon's readme request
-addon.get("/readme.md", (req, res) => {
+addon.get("/README.md", (req, res) => {
   res.sendFile(`${__dirname}/README.md`);
 });
 
