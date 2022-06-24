@@ -17,7 +17,7 @@ const config = {
 };
 
 //Public server build.
-if (env === "beamup") {
+if (true) {
   config.port = process.env.PORT;
   config.local = "https://4b139a4b7f94-wizdom-stremio-v2.baby-beamup.club";
 }
