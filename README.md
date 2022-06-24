@@ -19,6 +19,8 @@ npm install
 npm start
 ```
 
+Latest version has persistent environment variables. Change the if statement in `config.js` to be `false` to run the addon locally. Hoping this will change in the future.
+
 Add the addon to stremio from browser:
 stremio://127.0.0.1:7000/manifest.json
 
