@@ -1,0 +1,6 @@
+name: Deploy addon to beamup
+
+on:
+  push:
+    tags:
+      - v*
