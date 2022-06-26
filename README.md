@@ -19,9 +19,7 @@ npm install
 npm start
 ```
 
-Latest version has persistent environment variables. Change the if statement in `config.js` to be `false` to run the addon locally. Hoping this will change in the future.
-
-Add the addon to stremio from browser:
+Add the addon to Stremio from browser:
 stremio://127.0.0.1:7000/manifest.json
 
 or from the addon search menu:
@@ -33,11 +31,12 @@ Features I would like to implement and stuff needed to be done:
 - [x] Documentation
 - [x] Cache system (No need since we're not buffering the srts anymore)
 - [x] Maybe a landing page.
-- [x] Added Levenshtein sorting.
+- [x] Add Levenshtein sorting.
+- [x] Add CI/CD
 
 ## contributions
 
 These repos really helped me develop this addon:
 
-* [Addic7ed stremio Addon](https://github.com/phoborsh/addic7ed-stremio-addon/blob/master/README.md)
+* [Addic7ed Stremio Addon](https://github.com/phoborsh/addic7ed-stremio-addon/blob/master/README.md)
 * [subtitles-grouping](https://github.com/Ivshti/node-subtitles-grouping)
