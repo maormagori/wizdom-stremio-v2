@@ -4,3 +4,47 @@ on:
   push:
     tags:
       - v*
+    branches:
+      - main
+
+jobs:
+  verify-version:
+    id: verifyNPMVersion
+    name: Check package version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check package version
+        uses: technote-space/package-version-check-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  beamup-deploy:
+    needs: verifyNPMVersion
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install beamup
+        run: npm install beamup-cli -g
+      - name: Create beamup json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "beamup-config.json"
+          json: ${{ secrets.BEAMUP_CONFIG_JSON }}
+          dir: 'root/'
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Add beamup remote
+        run: git remote add beamup ${{ secrets.BEAMUP_REMOTE }}
+      - name: Add private key
+        run: |
+          touch ~/.ssh/id_rsa
+          echo ${{ secrets.SSH_KEY }}
+          chmod 400 ~/.ssh/id_rsa
+      - name: Deploy addon to beamup
+        run: git push HEAD:master --force
+
+
