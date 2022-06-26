@@ -29,9 +29,11 @@ jobs:
       - name: Install beamup
         run: npm install beamup-cli -g
       - name: Create beamup json
+        env:
+          BEAMUP_CONFIG_JSON: ${{ secrets.BEAMUP_CONFIG_JSON }}
         run: |
           touch ~/beamup-config.json
-          echo ${{ secrets.BEAMUP_CONFIG_JSON }} > ~/beamup-config.json
+          echo "$BEAMUP_CONFIG_JSON" > ~/beamup-config.json
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Add beamup remote
@@ -41,9 +43,11 @@ jobs:
           ssh-keyscan -H a.baby-beamup.club >> ~/.ssh/known_hosts
           git remote add beamup ${{ secrets.BEAMUP_REMOTE }}
       - name: Add private key
+        env: 
+          SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
           touch ~/.ssh/id_rsa
-          echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
       - name: Deploy addon to beamup
         run: git push beamup HEAD:master --force
