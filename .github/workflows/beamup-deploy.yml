@@ -29,11 +29,9 @@ jobs:
       - name: Install beamup
         run: npm install beamup-cli -g
       - name: Create beamup json
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "beamup-config.json"
-          json: ${{ secrets.BEAMUP_CONFIG_JSON }}
-          dir: 'root/'
+        run: |
+          touch /root/beamup-config.json
+          echo ${{ secrets.BEAMUP_CONFIG_JSON }} > /root/beamup-config.json
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Add beamup remote
