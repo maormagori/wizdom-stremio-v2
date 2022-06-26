@@ -9,7 +9,6 @@ on:
 
 jobs:
   verify-version:
-    id: verifyNPMVersion
     name: Check package version
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +18,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   beamup-deploy:
-    needs: verifyNPMVersion
+    needs: verify-version
     name: Deploy
     runs-on: ubuntu-latest
     steps:
