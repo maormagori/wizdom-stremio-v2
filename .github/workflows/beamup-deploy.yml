@@ -36,6 +36,8 @@ jobs:
           echo "$BEAMUP_CONFIG_JSON" > ~/beamup-config.json
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Add beamup remote
         run: |
           mkdir ~/.ssh/
