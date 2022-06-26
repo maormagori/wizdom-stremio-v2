@@ -30,8 +30,8 @@ jobs:
         run: npm install beamup-cli -g
       - name: Create beamup json
         run: |
-          touch /root/beamup-config.json
-          echo ${{ secrets.BEAMUP_CONFIG_JSON }} > /root/beamup-config.json
+          touch ~/beamup-config.json
+          echo ${{ secrets.BEAMUP_CONFIG_JSON }} > ~/beamup-config.json
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Add beamup remote
