@@ -46,6 +46,6 @@ jobs:
           echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
       - name: Deploy addon to beamup
-        run: git push HEAD:master --force
+        run: git push beamup HEAD:master --force
 
 
