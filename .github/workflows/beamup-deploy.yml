@@ -38,8 +38,9 @@ jobs:
         run: git remote add beamup ${{ secrets.BEAMUP_REMOTE }}
       - name: Add private key
         run: |
+          mkdir ~/.ssh/
           touch ~/.ssh/id_rsa
-          echo ${{ secrets.SSH_KEY }}
+          echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
       - name: Deploy addon to beamup
         run: git push HEAD:master --force
