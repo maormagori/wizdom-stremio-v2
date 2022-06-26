@@ -35,10 +35,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Add beamup remote
-        run: git remote add beamup ${{ secrets.BEAMUP_REMOTE }}
-      - name: Add private key
         run: |
           mkdir ~/.ssh/
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -H a.baby-beamup.club >> ~/.ssh/known_hosts
+          git remote add beamup ${{ secrets.BEAMUP_REMOTE }}
+      - name: Add private key
+        run: |
           touch ~/.ssh/id_rsa
           echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
