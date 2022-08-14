@@ -4,11 +4,28 @@ const express = require("express"),
   { getSubs, downloadSubZip } = require("./wizdom"),
   landing = require("./landingTemplate"),
   unzipper = require("unzipper"),
-  morgan = require("morgan");
+  morganBody = require("morgan-body"),
+  logger = require("./logger"),
+  requestId = require("express-request-id");
 
 const addon = express();
 addon.use(cors());
-addon.use(morgan("short"));
+addon.use(requestId({ setHeader: false }));
+
+// Setting up the logger
+morganBody(addon, {
+  prettify: false,
+  timezone: "Israel",
+  logRequestBody: false,
+  stream: config.remoteLogging ? logger : null,
+  noColors: true,
+  includeNewLine: false,
+  logIP: true,
+  logRequestId: true,
+  skip: (req, res) => {
+    return !req.path.includes("subtitles");
+  },
+});
 
 /**
  * The addon manifest: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
