@@ -14,6 +14,7 @@ const config = {
   wizdom_sub_download_url: "https://wizdom.xyz/api/files/sub/",
   stremio_server_subtitle_url: "http://127.0.0.1:11470/subtitles.vtt",
   srt_unzipper_path: "/srt/",
+  remoteLogging: process.env.LOGGER ?? false,
 };
 
 //Public server build.
@@ -26,5 +27,17 @@ else {
   config.port = 7000;
   config.local = "http://127.0.0.1:" + config.port;
 }
+
+//Prod logs are sent to log server
+config.logger = {
+  token: process.env.HEC_TOKEN ?? "",
+  host: process.env.INDEX_HOST ?? "",
+  path: "/splunk",
+  protocol: "http",
+  port: 80,
+  batchInterval: 5000,
+  maxBatchCount: 10,
+  maxBatchSize: 5120, // 5kb
+};
 
 module.exports = config;
