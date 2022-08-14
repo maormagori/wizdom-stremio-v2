@@ -45,7 +45,7 @@ const manifest = {
 
 /**
  * Adds simple headers to a response.
- * @param {express.Response} res 	The request's response object
+ * @param {import("superagent").Response} res 	The request's response object
  * @param {*} data 		The data to respond with.
  */
 const respondWithHeaders = function (res, data) {
