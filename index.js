@@ -6,11 +6,11 @@ const express = require("express"),
   unzipper = require("unzipper"),
   morganBody = require("morgan-body"),
   logger = require("./logger"),
-  morgan = require("morgan");
+  requestId = require("express-request-id");
 
 const addon = express();
 addon.use(cors());
-// addon.use(morgan("short"));
+addon.use(requestId({ setHeader: false }));
 
 // Setting up the logger
 morganBody(addon, {
@@ -21,8 +21,9 @@ morganBody(addon, {
   noColors: true,
   includeNewLine: false,
   logIP: true,
+  logRequestId: true,
   skip: (req, res) => {
-    return !(req.path.includes("manifest") || req.path.includes("subtitles"));
+    return !req.path.includes("subtitles");
   },
 });
 
