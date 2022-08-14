@@ -1,6 +1,6 @@
 {
   "name": "wizdom-stremio-express",
-  "version": "2.6.0",
+  "version": "2.5.0",
   "description": "Stremio addon for Hebrew subtitles from wizdom.xyz using express this time",
   "main": "index.js",
   "scripts": {
@@ -18,13 +18,10 @@
     "express": "^4.17.1",
     "fastest-levenshtein": "^1.0.12",
     "morgan": "^1.10.0",
-    "morgan-body": "^2.6.6",
-    "splunk-logging": "^0.11.1",
     "superagent": "^7.0.2",
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "nodemon": "^2.0.16"
   }
 }
