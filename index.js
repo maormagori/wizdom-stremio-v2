@@ -72,9 +72,10 @@ addon.get("/README.md", (req, res) => {
 });
 
 //Subtitles request.
-addon.get("/subtitles/:type/:imdbId/:query.json", async (req, res) => {
+addon.get("/subtitles/:type/:imdbId/:query?.json", async (req, res) => {
   try {
-    var filename = req.params.query.split("=").pop();
+    let filename;
+    if (req.params.query) filename = req.params.query.split("=").pop();
 
     const subtitles = await getSubs(req.params.imdbId, filename);
     respondWithHeaders(res, { subtitles: subtitles });
