@@ -29,7 +29,7 @@ const getSubs = async (imdbID, filename) => {
     ).body;
 
     subsArr = titleInfo.subs;
-    if (season || episode) subsArr = subsArr[season][episode];
+    if (season || episode) subsArr = subsArr[season][episode] ?? [];
 
     if (filename) {
       subsArr.sort((firstSub, secondSub) => {

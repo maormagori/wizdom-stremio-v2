@@ -1,6 +1,6 @@
 {
   "name": "wizdom-stremio-express",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "Stremio addon for Hebrew subtitles from wizdom.xyz using express this time",
   "main": "index.js",
   "scripts": {
