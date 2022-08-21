@@ -31,12 +31,14 @@ const getSubs = async (imdbID, filename) => {
     subsArr = titleInfo.subs;
     if (season || episode) subsArr = subsArr[season][episode];
 
-    subsArr.sort((firstSub, secondSub) => {
-      return (
-        distance(filename, firstSub.version) -
-        distance(filename, secondSub.version)
-      );
-    });
+    if (filename) {
+      subsArr.sort((firstSub, secondSub) => {
+        return (
+          distance(filename, firstSub.version) -
+          distance(filename, secondSub.version)
+        );
+      });
+    }
   } catch (err) {
     console.error("getSubs has thrown an error: ", err);
   } finally {
