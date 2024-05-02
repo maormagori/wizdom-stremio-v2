@@ -17,20 +17,12 @@ const superagent = require("superagent"),
 const getSubs = async (imdbID, filename) => {
   let subsArr = [];
   try {
-    const imdbIdSplit = imdbID.split(":");
-    const titleId = imdbIdSplit.shift(),
-      season = imdbIdSplit.shift(),
-      episode = imdbIdSplit.shift();
+    const [id, season = 0, episode = 0] = imdbID.split(":");
+    const url = `${config.wizdom_content_url}/search?action=by_id&imdb=${id}&season=${season}&episode=${episode}`;
+    const response = await superagent.get(url);
 
-    const titleInfo = (
-      await superagent
-        .get(new URL(titleId, config.wizdom_title_info).href)
-        .timeout(10000)
-    ).body;
-
-    subsArr = titleInfo.subs;
-    if (season || episode) subsArr = subsArr[season][episode] ?? [];
-
+    subsArr = response.body;
+    
     if (filename) {
       subsArr.sort((firstSub, secondSub) => {
         return (
