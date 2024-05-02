@@ -11,6 +11,7 @@ const config = {
   wizdom_url: "https://wizdom.xyz/",
   wizdom_api: "https://wizdom.xyz/api/",
   wizdom_title_info: "https://wizdom.xyz/api/releases/",
+  wizdom_content_url: "https://wizdom.xyz/api/",
   wizdom_sub_download_url: "https://wizdom.xyz/api/files/sub/",
   stremio_server_subtitle_url: "http://127.0.0.1:11470/subtitles.vtt",
   srt_unzipper_path: "/srt/",
