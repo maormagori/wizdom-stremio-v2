@@ -87,12 +87,15 @@ addon.get("/subtitles/:type/:imdbId/:query?.json", async (req, res) => {
 /**
  * unzips Wizdom zip files and send the srt file in it.
  */
-addon.get("/srt/:id.srt", (req, res) => {
+addon.get("/srt/:id.srt", async (req, res) => {
   try {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "*");
     res.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
-    downloadSubZip(req.params.id).pipe(unzipper.ParseOne()).pipe(res);
+
+    const srtContent = await downloadSubZip(req.params.id);
+
+    res.send(srtContent)
   } catch (err) {
     console.error("error occurred while sending unzipped srt file: ", err);
   }
