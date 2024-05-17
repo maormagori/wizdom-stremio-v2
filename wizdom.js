@@ -5,6 +5,7 @@
 
 const superagent = require("superagent"),
   config = require("./config"),
+  wizdomApi = require("./apis/wizdomApi").default,
   AdmZip = require("adm-zip"),
   { distance } = require("fastest-levenshtein");
 
@@ -68,7 +69,7 @@ const mapSubsJson = (subsArr) => {
  * @returns {superagent.SuperAgentRequest} A request to the requested id's zip file.
  */
 const downloadSubZip = async (subtitleID) => {
-  const url = `${config.WIZDOM_DOWNLOAD_URL}/${subtitleID}`;
+  const url = `${wizdomApi.DOWNLOAD_URL}/${subtitleID}`;
   const response = await superagent.get(url).buffer(true)
 
   const zip = new AdmZip(response.body);
