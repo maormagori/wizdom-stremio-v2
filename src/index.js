@@ -1,5 +1,6 @@
 const express = require("express"),
   baseConfig = require("./configs/baseConfig"),
+  manifestConfig = require("./configs/manifestConfig"),
   config = require("./config"),
   cors = require("cors"),
   { getSubs, downloadSubZip } = require("./wizdom"),
@@ -27,22 +28,6 @@ morganBody(addon, {
     return !req.path.includes("subtitles");
   },
 });
-
-/**
- * The addon manifest: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
- */
-const manifest = {
-  id: "xyz.stremio.wizdom",
-  contactEmail: "maor@magori.online",
-  version: process.env.npm_package_version,
-  catalogs: [],
-  resources: ["subtitles"],
-  types: ["movie", "series"],
-  name: "Wizdom Subtitles",
-  description:
-    "An unofficial Stremio addon for Hebrew subtitles from wizdom.xyz. Developed by Maor Development",
-  logo: "https://i.ibb.co/KLYK0TH/wizdon256.png",
-};
 
 /**
  * Adds simple headers to a response.
@@ -102,8 +87,4 @@ addon.get("/srt/:id.srt", async (req, res) => {
   }
 });
 
-//Starting the addon
-addon.listen(config.port, function () {
-  console.log(config);
-  console.log(`Add-on Repository URL: ${baseConfig.BASE_URL}/manifest.json`);
-});
+addon.listen(baseConfig.PORT, () => { console.log(`Add-on Repository URL: ${baseConfig.BASE_URL}/manifest.json`); });
