@@ -179,3 +179,5 @@ button:active {
    margin-bottom: 4vh;
 }
 `
+
+export default STYLESHEET;
