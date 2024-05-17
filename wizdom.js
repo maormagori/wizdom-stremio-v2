@@ -5,6 +5,7 @@
 
 const superagent = require("superagent"),
   config = require("./config"),
+  AdmZip = require("adm-zip"),
   { distance } = require("fastest-levenshtein");
 
 /**
@@ -22,7 +23,7 @@ const getSubs = async (imdbID, filename) => {
     const response = await superagent.get(url);
 
     subsArr = response.body;
-    
+
     if (filename) {
       subsArr.sort((firstSub, secondSub) => {
         return (
@@ -66,9 +67,16 @@ const mapSubsJson = (subsArr) => {
  * @param {number} subId
  * @returns {superagent.SuperAgentRequest} A request to the requested id's zip file.
  */
-const downloadSubZip = (subId) => {
-  let subZipURL = new URL(subId, config.wizdom_sub_download_url);
-  return superagent.get(subZipURL.href);
+const downloadSubZip = async (subtitleID) => {
+  const url = `${config.WIZDOM_DOWNLOAD_URL}/${subtitleID}`;
+  const response = await superagent.get(url).buffer(true)
+
+  const zip = new AdmZip(response.body);
+  const zipEntries = zip.getEntries();
+  const srtEntry = zipEntries.find(entry => entry.entryName.endsWith('.srt'));
+  const srtContent = srtEntry.getData().toString('utf8');
+
+  return srtContent;
 };
 
 module.exports = { getSubs, downloadSubZip };
