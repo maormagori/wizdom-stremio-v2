@@ -1,4 +1,5 @@
 const express = require("express"),
+  baseConfig = require("./configs/baseConfig"),
   config = require("./config"),
   cors = require("cors"),
   { getSubs, downloadSubZip } = require("./wizdom"),
@@ -104,5 +105,5 @@ addon.get("/srt/:id.srt", async (req, res) => {
 //Starting the addon
 addon.listen(config.port, function () {
   console.log(config);
-  console.log(`Add-on Repository URL: ${config.local}/manifest.json`);
+  console.log(`Add-on Repository URL: ${baseConfig.BASE_URL}/manifest.json`);
 });
