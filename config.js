@@ -7,6 +7,7 @@
 
 let env = process.env.DEPLOYMENT ?? "local";
 const config = {
+  WIZDOM_DOWNLOAD_URL: "https://wizdom.xyz/api/files/sub",
   wizdom_host: "wizdom.xyz",
   wizdom_url: "https://wizdom.xyz/",
   wizdom_api: "https://wizdom.xyz/api/",
