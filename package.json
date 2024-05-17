@@ -3,9 +3,9 @@
   "version": "2.6.2",
   "description": "Stremio addon for Hebrew subtitles from wizdom.xyz using express this time",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "devStart": "nodemon index.js"
+    "start": "node src/index.js"
   },
   "keywords": [
     "stremio",
@@ -15,18 +15,8 @@
   "license": "GPL-3.0",
   "dependencies": {
     "adm-zip": "^0.5.12",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-request-id": "^1.4.1",
-    "fastest-levenshtein": "^1.0.12",
-    "morgan": "^1.10.0",
-    "morgan-body": "^2.6.6",
-    "splunk-logging": "^0.11.1",
-    "superagent": "^7.0.2",
-    "unzipper": "^0.10.11"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "nodemon": "^2.0.16"
+    "express": "^4.19.2",
+    "fastest-levenshtein": "^1.0.16",
+    "superagent": "^7.0.2"
   }
 }
