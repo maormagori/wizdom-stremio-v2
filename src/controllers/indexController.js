@@ -1,10 +1,10 @@
 import manifestConfig from "../configs/manifestConfig.js";
 import indexService from "../services/indexService.js";
-import landing from "../services/landingService.js";
+import landingPageService from "../services/landingPageService.js";
 import extractData from "../utils/dataExtractor.js";
 
 
-const getIndex = async (req, res) => { res.send(landing(manifestConfig)) };
+const getIndex = async (req, res) => { res.send(landingPageService.landingPage(manifestConfig)) };
 const getReadMe = async (req, res) => { res.sendFile("README.md", { root: "./" }); };
 const getManifest = async (req, res) => { res.send(manifestConfig); };
 
