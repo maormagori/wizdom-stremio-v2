@@ -3,9 +3,9 @@
  * Handles all the wizdom requests.
  */
 
-const superagent = require("superagent"),
-  config = require("./config"),
-  { distance } = require("fastest-levenshtein");
+const superagent = require('superagent');
+const config = require('./config');
+const { distance } = require('fastest-levenshtein');
 
 /**
  * request's all the subs available for a specific imdb id.
@@ -17,10 +17,10 @@ const superagent = require("superagent"),
 const getSubs = async (imdbID, filename) => {
   let subsArr = [];
   try {
-    const imdbIdSplit = imdbID.split(":");
-    const titleId = imdbIdSplit.shift(),
-      season = imdbIdSplit.shift(),
-      episode = imdbIdSplit.shift();
+    const imdbIdSplit = imdbID.split(':');
+    const titleId = imdbIdSplit.shift();
+    const season = imdbIdSplit.shift();
+    const episode = imdbIdSplit.shift();
 
     const titleInfo = (
       await superagent
@@ -29,7 +29,9 @@ const getSubs = async (imdbID, filename) => {
     ).body;
 
     subsArr = titleInfo.subs;
-    if (season || episode) subsArr = subsArr[season][episode] ?? [];
+    if (season || episode) {
+      subsArr = subsArr[season][episode] ?? [];
+    }
 
     if (filename) {
       subsArr.sort((firstSub, secondSub) => {
@@ -40,10 +42,9 @@ const getSubs = async (imdbID, filename) => {
       });
     }
   } catch (err) {
-    console.error("getSubs has thrown an error: ", err);
-  } finally {
-    return mapSubsJson(subsArr);
+    console.error('getSubs has thrown an error: ', err);
   }
+  return mapSubsJson(subsArr);
 };
 
 /**
@@ -53,15 +54,15 @@ const getSubs = async (imdbID, filename) => {
  * @returns {Array} Array of stremio's subtitle object.
  */
 const mapSubsJson = (subsArr) => {
-  subtitles = [];
+  const subtitles = [];
   subsArr.map((sub) => {
-    let subURL = new URL(
+    const subURL = new URL(
       `${sub.id}.srt`,
       config.local + config.srt_unzipper_path
     );
     subtitles.push({
       url: subURL.href,
-      lang: "heb",
+      lang: 'heb',
       id: `[WIZDOM]${sub.id}`,
     });
   });
@@ -75,7 +76,7 @@ const mapSubsJson = (subsArr) => {
  * @returns {superagent.SuperAgentRequest} A request to the requested id's zip file.
  */
 const downloadSubZip = (subId) => {
-  let subZipURL = new URL(subId, config.wizdom_sub_download_url);
+  const subZipURL = new URL(subId, config.wizdom_sub_download_url);
   return superagent.get(subZipURL.href);
 };
 
