@@ -209,21 +209,24 @@ button:active {
 .separator {
    margin-bottom: 4vh;
 }
-`
+`;
 
 function landingTemplate(manifest) {
-	const background = manifest.background || 'https://dl.strem.io/addon-background.jpg'
-	const logo = manifest.logo || 'https://dl.strem.io/addon-logo.png'
-	const contactHTML = manifest.contactEmail ?
-		`<div class="contact">
+  const background =
+    manifest.background || 'https://dl.strem.io/addon-background.jpg';
+  const logo = manifest.logo || 'https://dl.strem.io/addon-logo.png';
+  const contactHTML = manifest.contactEmail
+    ? `<div class="contact">
          <p>Contact ${manifest.name} addon creator:</p>
          <a href="mailto:${manifest.contactEmail}">${manifest.contactEmail}</a>
-      </div>` : ''
+      </div>`
+    : '';
 
-	const stylizedTypes = manifest.types
-		.map(t => t[0].toUpperCase() + t.slice(1) + (t !== 'series' ? 's' : ''))
+  const stylizedTypes = manifest.types.map(
+    (t) => t[0].toUpperCase() + t.slice(1) + (t !== 'series' ? 's' : '')
+  );
 
-	return `
+  return `
    <!DOCTYPE html>
    <html style="background-image: url(${background})">
 
@@ -253,7 +256,7 @@ function landingTemplate(manifest) {
 
             <h3 class="gives">This addon has more :</h3>
             <ul>
-               ${stylizedTypes.map(t => `<li>${t}</li>`).join('')}
+               ${stylizedTypes.map((t) => `<li>${t}</li>`).join('')}
             </ul>
 
             <div class="separator"></div>
@@ -278,7 +281,7 @@ function landingTemplate(manifest) {
       
 	</body>
 
-	</html>`
+	</html>`;
 }
 
-module.exports = landingTemplate
+module.exports = landingTemplate;

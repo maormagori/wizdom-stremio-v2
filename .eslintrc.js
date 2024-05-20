@@ -17,7 +17,6 @@ module.exports = {
       'single',
       { avoidEscape: true, allowTemplateLiterals: true },
     ],
-    'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     'class-methods-use-this': 0,
     'object-curly-spacing': [2, 'always'],
     semi: 2,
