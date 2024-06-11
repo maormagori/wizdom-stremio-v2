@@ -24,7 +24,7 @@ if (env === 'beamup') {
 }
 //Locally running
 else {
-  config.port = 7000;
+  config.port = 7001;
   config.local = 'http://127.0.0.1:' + config.port;
 }
 

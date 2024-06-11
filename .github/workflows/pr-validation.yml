@@ -1,4 +1,4 @@
-# A github workflow that make sure the PR passes linting
+# A GitHub workflow that make sure the PR passes linting and tests before merging
 
 name: PR Validation
 
@@ -21,3 +21,16 @@ jobs:
         run: npm install
       - name: Lint
         run: npm run lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.9.0'
+      - name: Install dependencies
+        run: npm install
+      - name: Test
+        run: npm run test
