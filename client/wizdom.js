@@ -4,35 +4,50 @@
  */
 
 const superagent = require('superagent');
-const config = require('../config');
 
-const getSubs = async (titleId, season, episode) => {
-  let subsArr = [];
+const WIZDOM_TIMEOUT = 10000;
+
+const WIZDOM_HOST = 'wizdom.xyz';
+const WIZDOM_URL = `https://${WIZDOM_HOST}/`;
+const WIZDOM_API = `${WIZDOM_URL}api/`;
+const WIZDOM_SUB_DOWNLOAD_URL = `${WIZDOM_API}files/sub`;
+
+/**
+ * Builds a URL to get the requested title's info.
+ * @param titleId - The title's imdb id.
+ * @param season - The requested season.
+ * @param episode - The requested episode.
+ * @returns {`${string}search?action=by_id&imdb=${string}&season=${string}&episode=${string}`}
+ */
+const buildTitleInfoURL = (titleId, season, episode) =>
+  `${WIZDOM_API}search?action=by_id&imdb=${titleId}&season=${season}&episode=${episode}`;
+
+/**
+ * Fetches the requested title's subs from wizdom.
+ * @param titleId - The title's imdb id.
+ * @param season - The requested season.
+ * @param episode   - The requested episode.
+ * @returns {Promise<*|*[]>} - The requested title's subs.
+ */
+const fetchSubsFromWizdom = async (titleId, season, episode) => {
+  const titleUrl = buildTitleInfoURL(titleId, season, episode);
+
   try {
-    const titleInfo = (
-      await superagent
-        .get(new URL(titleId, config.wizdom_title_info).href)
-        .timeout(10000)
-    ).body;
-
-    subsArr = titleInfo.subs;
-    if (season || episode) {
-      subsArr = subsArr[season][episode] ?? [];
-    }
+    const subs = (await superagent.get(titleUrl).timeout(WIZDOM_TIMEOUT)).body;
+    return subs || [];
   } catch (err) {
     console.error('getSubs has thrown an error: ', err);
+    return [];
   }
-  return subsArr;
 };
 
 /**
  * returns a file stream of requested sub's id zip file.
  * @param {number} subId
- * @returns {superagent.SuperAgentRequest} A request to the requested id's zip file.
+ * @returns {Request} - The requested sub's zip file.
  */
 const downloadSubZip = (subId) => {
-  const subZipURL = new URL(subId, config.wizdom_sub_download_url);
-  return superagent.get(subZipURL.href);
+  return superagent.get(`${WIZDOM_SUB_DOWNLOAD_URL}/${subId}`);
 };
 
-module.exports = { getSubs, downloadSubZip };
+module.exports = { fetchSubsFromWizdom, downloadSubZip };
