@@ -12,7 +12,6 @@ const errorHandler = require('./middlewares/errorMiddleware');
 
 const addon = express();
 addon.use(cors());
-addon.use(errorHandler);
 
 //Landing page request.
 addon.get('/', landing);
@@ -48,5 +47,7 @@ addon.get('/srt/:id.srt', (req, res) => {
     });
   }
 });
+
+addon.use(errorHandler);
 
 module.exports = addon;
