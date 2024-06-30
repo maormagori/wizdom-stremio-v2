@@ -6,7 +6,7 @@ const PORT = config.get('port');
 const IS_PRODUCTION = config.get('isProduction');
 
 const getSubUrl = (subID) =>
-  `${SERVER_HOSTNAME}${IS_PRODUCTION ? '' : PORT}${SRT_ROUTE}${subID}.srt`;
+  `${SERVER_HOSTNAME}${IS_PRODUCTION ? '' : `:${PORT}`}${SRT_ROUTE}${subID}.srt`;
 
 /**
  * Builds an array of subtitle object: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/subtitles.md
