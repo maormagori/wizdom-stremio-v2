@@ -7,6 +7,7 @@ const unzipper = require('unzipper');
 const manifest = require('./data/manifest');
 const mapToStremioSubs = require('./middlewares/sendMappedSubs');
 const getWizdomSubs = require('./middlewares/getWizdomSubs');
+const logger = require('./common/logger');
 
 const addon = express();
 addon.use(cors());
@@ -39,7 +40,10 @@ addon.get('/srt/:id.srt', (req, res) => {
     res.setHeader('Content-Type', 'application/octet-stream; charset=utf-8');
     downloadSubZip(req.params.id).pipe(unzipper.ParseOne()).pipe(res);
   } catch (err) {
-    console.error('error occurred while sending unzipped srt file: ', err);
+    logger.error(err, {
+      ktuvitTitleID: req.params.id,
+      description: 'Error downloading SRT file.',
+    });
   }
 });
 

@@ -4,6 +4,7 @@
  */
 
 const superagent = require('superagent');
+const logger = require('../common/logger');
 
 const WIZDOM_TIMEOUT = 10000;
 
@@ -36,7 +37,12 @@ const fetchSubsFromWizdom = async (titleId, season, episode) => {
     const subs = (await superagent.get(titleUrl).timeout(WIZDOM_TIMEOUT)).body;
     return subs || [];
   } catch (err) {
-    console.error('getSubs has thrown an error: ', err);
+    logger.error(err, {
+      description: 'Failed to fetch subs from wizdom',
+      titleId,
+      season,
+      episode,
+    });
     return [];
   }
 };
