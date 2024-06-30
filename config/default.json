@@ -1,0 +1,6 @@
+{
+  "srtUnzipperRoute": "/srt/",
+  "port": 7001,
+  "hostname": "http://127.0.0.1",
+  "isProduction": false
+}
