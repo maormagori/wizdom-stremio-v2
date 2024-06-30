@@ -8,9 +8,11 @@ const manifest = require('./data/manifest');
 const mapToStremioSubs = require('./middlewares/sendMappedSubs');
 const getWizdomSubs = require('./middlewares/getWizdomSubs');
 const logger = require('./common/logger');
+const errorHandler = require('./middlewares/errorMiddleware');
 
 const addon = express();
 addon.use(cors());
+addon.use(errorHandler);
 
 //Landing page request.
 addon.get('/', landing);
