@@ -10,6 +10,7 @@ module.exports = {
     mocha: true,
   },
   rules: {
+    'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     'prefer-const': 2,
     'no-var': 2,
     'no-unused-vars': 'error',
