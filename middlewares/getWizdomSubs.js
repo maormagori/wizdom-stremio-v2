@@ -1,5 +1,5 @@
 const exitEarlyWithEmptySubtitlesArray = require('./exitEarly');
-const { getSubs } = require('../client/wizdom');
+const { fetchSubsFromWizdom } = require('../client/wizdom');
 const sortSubs = require('../util/sortSubs');
 
 async function getWizdomSubs(req, res, next) {
@@ -8,7 +8,7 @@ async function getWizdomSubs(req, res, next) {
   }
 
   const { imdbID, season, episode, filename } = req.title;
-  const subs = await getSubs(imdbID, season, episode);
+  const subs = await fetchSubsFromWizdom(imdbID, season, episode);
 
   if (!subs) {
     exitEarlyWithEmptySubtitlesArray(res);
