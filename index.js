@@ -1,7 +1,9 @@
-const config = require('./config');
+const config = require('config');
 const addon = require('./server.js');
 
-addon.listen(config.port, function () {
-  console.log(config);
-  console.log(`Add-on Repository URL: ${config.local}/manifest.json`);
+const HOSTNAME = config.get('hostname');
+const PORT = config.get('port');
+
+addon.listen(PORT, function () {
+  console.log(`Add-on Repository URL: ${HOSTNAME}:${PORT}/manifest.json`);
 });
