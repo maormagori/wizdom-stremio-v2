@@ -3,8 +3,8 @@ const { distance } = require('fastest-levenshtein');
 function sortSubs(subsArr, filename) {
   subsArr.sort((firstSub, secondSub) => {
     return (
-      distance(filename, firstSub.version) -
-      distance(filename, secondSub.version)
+      distance(filename, firstSub.versioname) -
+      distance(filename, secondSub.versioname)
     );
   });
 }
