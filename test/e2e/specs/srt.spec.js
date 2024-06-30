@@ -11,6 +11,9 @@ describe('GET /srt/:id.srt', () => {
   after(() => {
     nock.cleanAll();
   });
+  beforeEach(() => {
+    nock.cleanAll();
+  });
 
   it('Should download sub zip and extract srt file from it', async () => {
     nock(`https://wizdom.xyz/`)
@@ -27,5 +30,10 @@ describe('GET /srt/:id.srt', () => {
     );
     assert.strictEqual(response.body.toString(), srtFileBuffer.toString());
   });
-  // TODO: Add more test when srt path is more robust.
+  it('Should return 500 if error downloading srt file', async () => {
+    nock(`https://wizdom.xyz/`).get(`/api/files/sub/${MOCK_SUB_ID}`).reply(500);
+
+    const response = await request(addon).get(`/srt/${MOCK_SUB_ID}.srt`);
+    assert.strictEqual(response.status, 500);
+  });
 });
