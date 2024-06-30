@@ -17,6 +17,7 @@
   "author": "Maor Development",
   "license": "GPL-3.0",
   "dependencies": {
+    "config": "^3.3.12",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-request-id": "^1.4.1",
