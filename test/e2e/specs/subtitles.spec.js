@@ -3,7 +3,7 @@ const assert = require('assert');
 const nock = require('nock');
 const addon = require('../../../server');
 
-const MOCK_TITLE_ID = `mockTitle`;
+const MOCK_TITLE_ID = `tt1234567`;
 const MOCK_SUB_ID1 = 66054;
 const MOCK_SUB_ID2 = 66055;
 

@@ -28,6 +28,7 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
  */
+const manifest = require('../data/manifest');
 
 const STYLESHEET = `
 * {
@@ -211,6 +212,12 @@ button:active {
 }
 `;
 
+function landing(req, res) {
+  const landingHtml = landingTemplate(manifest);
+  res.set('Content-Type', 'text/html');
+  res.send(landingHtml);
+}
+
 function landingTemplate(manifest) {
   const background =
     manifest.background || 'https://dl.strem.io/addon-background.jpg';
@@ -237,7 +244,7 @@ function landingTemplate(manifest) {
       <link rel="shortcut icon" href="${logo}" type="image/x-icon">
       <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@next/dist/zero-md.min.js"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
    </head>
 
    <body>
@@ -284,4 +291,4 @@ function landingTemplate(manifest) {
 	</html>`;
 }
 
-module.exports = landingTemplate;
+module.exports = landing;
