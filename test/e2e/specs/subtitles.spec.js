@@ -5,6 +5,7 @@ const addon = require('../../../server');
 
 const MOCK_TITLE_ID = `tt1234567`;
 const MOCK_SUB_ID1 = 66054;
+const MOCK_SUB_NAME1 = 'sub1';
 const MOCK_SUB_ID2 = 66055;
 
 const mockTitle = (titleId, season, episode, response, status = 200) => {
@@ -15,11 +16,11 @@ const mockTitle = (titleId, season, episode, response, status = 200) => {
     .reply(status, response);
 };
 
-const createSubtitleArray = (subsIdArr) => {
-  return subsIdArr.map((subId) => ({
-    url: `http://127.0.0.1:7001/srt/${subId}.srt`,
+const createSubtitleArray = (subs) => {
+  return subs.map((sub) => ({
+    url: `http://127.0.0.1:7001/srt/${sub.id}.srt`,
     lang: 'heb',
-    id: `[WIZDOM]${subId}`,
+    id: `[WIZDOM]${sub.versioname}`,
   }));
 };
 
@@ -39,12 +40,14 @@ describe('GET /subtitles/:type/:imdbId/:query?.json', () => {
     nock.cleanAll();
   });
   it('should return movie subtitle', async () => {
-    mockTitle(MOCK_TITLE_ID, undefined, undefined, [
+    const subs = [
       {
         id: MOCK_SUB_ID1,
+        versioname: MOCK_SUB_NAME1,
       },
-    ]);
-    const expectedSubs = createSubtitleArray([MOCK_SUB_ID1]);
+    ];
+    mockTitle(MOCK_TITLE_ID, undefined, undefined, subs);
+    const expectedSubs = createSubtitleArray(subs);
     const testUrl = `/subtitles/movie/${MOCK_TITLE_ID}/extraArgs.json`;
 
     await makeRequestAndAssertResponse(testUrl, expectedSubs);
@@ -53,19 +56,21 @@ describe('GET /subtitles/:type/:imdbId/:query?.json', () => {
   it('should return episode subtitle', async () => {
     const mockSeason = 2;
     const mockEpisode = 3;
-    mockTitle(MOCK_TITLE_ID, mockSeason, mockEpisode, [
+    const subs = [
       {
         id: MOCK_SUB_ID1,
+        versioname: MOCK_SUB_NAME1,
       },
-    ]);
-    const expectedSubs = createSubtitleArray([MOCK_SUB_ID1]);
+    ];
+    mockTitle(MOCK_TITLE_ID, mockSeason, mockEpisode, subs);
+    const expectedSubs = createSubtitleArray(subs);
     const testUrl = `/subtitles/series/${MOCK_TITLE_ID}:${mockSeason}:${mockEpisode}/extraArgs.json`;
 
     await makeRequestAndAssertResponse(testUrl, expectedSubs);
   });
 
   it('should return sorted subtitles', async () => {
-    mockTitle(MOCK_TITLE_ID, undefined, undefined, [
+    const subs = [
       {
         id: MOCK_SUB_ID1,
         versioname: 'sub1',
@@ -74,8 +79,9 @@ describe('GET /subtitles/:type/:imdbId/:query?.json', () => {
         id: MOCK_SUB_ID2,
         versioname: 'sub2',
       },
-    ]);
-    const expectedSubs = createSubtitleArray([MOCK_SUB_ID2, MOCK_SUB_ID1]);
+    ];
+    mockTitle(MOCK_TITLE_ID, undefined, undefined, subs);
+    const expectedSubs = createSubtitleArray(subs.reverse());
     const testUrl = `/subtitles/movie/${MOCK_TITLE_ID}/filename=sub2.json`;
 
     await makeRequestAndAssertResponse(testUrl, expectedSubs);
@@ -105,12 +111,14 @@ describe('GET /subtitles/:type/:imdbId/:query?.json', () => {
   });
 
   it('should return title subtitles when no extra args were given', async () => {
-    mockTitle(MOCK_TITLE_ID, undefined, undefined, [
+    const subs = [
       {
         id: MOCK_SUB_ID1,
+        versioname: MOCK_SUB_NAME1,
       },
-    ]);
-    const expectedSubs = createSubtitleArray([MOCK_SUB_ID1]);
+    ];
+    mockTitle(MOCK_TITLE_ID, undefined, undefined, subs);
+    const expectedSubs = createSubtitleArray(subs);
     const testUrl = `/subtitles/movie/${MOCK_TITLE_ID}.json`;
 
     await makeRequestAndAssertResponse(testUrl, expectedSubs);
