@@ -1,4 +1,5 @@
 const exitEarlyWithEmptySubtitlesArray = require('./exitEarly');
+const logger = require('../common/logger');
 
 const VALID_IMDB_ID = /^tt\d{7,9}$/;
 
@@ -26,6 +27,7 @@ function extractTitle(req, res, next) {
 
   if (!VALID_IMDB_ID.test(imdbID)) {
     exitEarlyWithEmptySubtitlesArray(res);
+    logger.debug('Invalid imdb ID', { imdbID });
     return;
   }
 
