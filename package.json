@@ -25,7 +25,7 @@
     "morgan": "^1.10.0",
     "morgan-body": "^2.6.6",
     "splunk-logging": "^0.11.1",
-    "superagent": "^7.0.2",
+    "superagent": "^9.0.2",
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
