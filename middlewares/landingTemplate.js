@@ -283,7 +283,7 @@ function landingTemplate(manifest) {
          </div>
       </div>
       <script>
-         installLink.href = 'stremio://' + window.location.host + '/manifest.mock.js'
+         installLink.href = 'stremio://' + window.location.host + '/manifest.json'
       </script>
       
 	</body>
